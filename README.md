@@ -1,6 +1,6 @@
 # retrowebcore
 
-This is a simple web app for scrum retropective, consisting Liked-Lacked-Learned-Longed for the card types. 
+This is a simple web app for scrum retrospective, consisting Liked-Lacked-Learned-Longed for the card types. For more information about scrum retros app, please google with keyword `scrum retro app`.
 The features are:
 - create board
 - create card of each board
