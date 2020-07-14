@@ -31,8 +31,8 @@ namespace retrowebcore.Handlers.Boards
                 .TagWith(BoardListHandlerQuery)
                 .Where(x => x.Deletor == null && x.DeletedAt == null)
                 .OrderByDescending(x => x.Created)
-                .Take(r.Limit)
                 .Skip(r.Offset)
+                .Take(r.Limit)
                 .ToListAsync();
             var hasMore = false;
             var hasPrev = false;
@@ -40,8 +40,12 @@ namespace retrowebcore.Handlers.Boards
             {
                 var soonest = data.First().Created;
                 var oldest = data.Last().Created;
-                hasMore = await _context.Boards.AnyAsync(x => x.Created < oldest);
-                hasPrev = await _context.Boards.AnyAsync(x => x.Created > soonest);
+                hasMore = await _context.Boards
+                    .OrderByDescending(x => x.Created)
+                    .AnyAsync(x => x.DeletedAt == null && x.Deletor == null && x.Created < oldest);
+                hasPrev = await _context.Boards
+                    .OrderByDescending(x => x.Created)
+                    .AnyAsync(x => x.DeletedAt == null && x.Deletor == null && x.Created > soonest);
             }
 
             return new BoardListResponse { HasPrev = hasPrev, HasNext = hasMore, Data = data };
