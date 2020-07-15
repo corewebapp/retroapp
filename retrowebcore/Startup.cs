@@ -46,7 +46,7 @@ namespace retrowebcore
 #if DEBUG
             if (Env.IsDevelopment())
             {
-               // builder.AddRazorRuntimeCompilation();
+               builder.AddRazorRuntimeCompilation();
             }
 #endif
             services.AddSignalR();
