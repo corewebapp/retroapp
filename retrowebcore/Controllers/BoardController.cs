@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using retrowebcore.Handlers.Boards;
 using retrowebcore.Models;
+using retrowebcore.Persistences;
 
 namespace retrowebcore.Controllers
 {
@@ -17,7 +18,12 @@ namespace retrowebcore.Controllers
         const string BoardList = nameof(BoardList);
         const string BoardView = nameof(BoardView);
 
-        public BoardController(ILogger<BoardController> l, IMediator m) : base(l,m) { }
+        AppDbContext c;
+
+        public BoardController(ILogger<BoardController> l, IMediator m, AppDbContext c) : base(l,m) 
+        {
+            this.c = c;
+        }
 
         public async Task<IActionResult> List() =>
             View(BoardList, await _mediator.Send(new BoardListRequest()));

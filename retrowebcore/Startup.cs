@@ -12,9 +12,12 @@ namespace retrowebcore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        IWebHostEnvironment Env;
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -38,6 +41,14 @@ namespace retrowebcore
             services.AddControllersWithViews(); 
             services.AddHttpContextAccessor();
             services.AddRazorPages();
+            IMvcBuilder builder = services.AddRazorPages();
+
+#if DEBUG
+            if (Env.IsDevelopment())
+            {
+               // builder.AddRazorRuntimeCompilation();
+            }
+#endif
             services.AddSignalR();
             services.AddMediatR(typeof(Startup));
         }

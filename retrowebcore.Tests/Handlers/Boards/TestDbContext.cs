@@ -6,7 +6,7 @@ namespace retrowebcore.Handlers.Boards.Tests
 {
     public class TestDbContext : AppDbContext
     {
-        public TestDbContext(DbContextOptions<AppDbContext> o, long userInContext) : base(o) =>
+        public TestDbContext(DbContextOptions<AppDbContext> o, long userInContext) : base(o, null) =>
             ScopedUserId = userInContext;
 
         protected override void OnModelCreating(ModelBuilder builder)

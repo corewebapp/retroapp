@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 using retrowebcore.Models;
 using System;
 using System.Collections.Generic;
@@ -40,10 +41,18 @@ namespace retrowebcore.Persistences
         /// well, this is quite hacky, for testing purpose. Dont touch this in production, keep it null
         /// </summary>
         protected long? ScopedUserId = null;
+        private ILoggerFactory _loggerFactory = null;
 
-        public AppDbContext(DbContextOptions<AppDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, ILoggerFactory loggerFactory)
             : base(options)
         {
+            _loggerFactory = loggerFactory;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseLoggerFactory(_loggerFactory);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
