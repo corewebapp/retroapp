@@ -4,47 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - retrowebcore</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/mini.css/mini-default.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     @RenderSection("Heads", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Board" asp-action="List">retrowebcore</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Board" asp-action="List">Boards</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+    <header class="row">
+        <a class="logo"  asp-area="" asp-controller="Board" asp-action="List">retrowebcore</a>
+        <a class="button" asp-area="" asp-controller="Board" asp-action="List">Boards</a>
+        <a class="button" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <partial name="_LoginPartial" />
     </header>
-    @{
-        var containerClass = ViewData[R.RootContainerClass] ?? "container-fluid";
-    }
-    <div class="@containerClass">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - retrowebcore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/feather-icons/dist/feather.min.js"></script>
@@ -53,11 +34,7 @@
         feather.replace()
     </script>
     <script>
-        var @nameof(retrowebcore.Hubs.BoardHub.hubAddNewBoard) = '@retrowebcore.Hubs.BoardHub.hubAddNewBoard';
-        var @nameof(retrowebcore.Hubs.BoardHub.hubNewBoardEvent) = '@retrowebcore.Hubs.BoardHub.hubNewBoardEvent';
-
-        var @nameof(retrowebcore.Hubs.BoardHub.hubArchiveBoard) = '@retrowebcore.Hubs.BoardHub.hubArchiveBoard';
-        var @nameof(retrowebcore.Hubs.BoardHub.hubArchiveEvent) = '@retrowebcore.Hubs.BoardHub.hubArchiveEvent';
+        
 
         var @nameof(retrowebcore.Hubs.CardHub.hubAddNewCard) = '@retrowebcore.Hubs.CardHub.hubAddNewCard';
         var @nameof(retrowebcore.Hubs.CardHub.hubNewCardEvent) = '@retrowebcore.Hubs.CardHub.hubNewCardEvent';

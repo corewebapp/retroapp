@@ -3,52 +3,87 @@
     ViewData["Title"] = "Board List";
 }
 
-<div class="container">
-    <div class="row">
-        <input class="col-3 form-control mr-1" type="text" id="squadName" placeholder="Squad name" value="" required />
-        <input class="col-3 form-control mr-1" type="text" id="sprintName" placeholder="Sprint name" value="" required />
-        <div class="invalid-feedback">
-            Valid first name is required.
-        </div>
-        <div class="col-3">
-            <button class="btn btn-primary" type="button" id="addNewBoard">
-                Add new board
-                <span class="spinner-border spinner-border-sm hidden" id="sendButtonSpinner" role="status" aria-hidden="true"></span>
-            </button>
-        </div>
-    </div>
+<div class="row">
+    <input class="rounded" type="text" id="squadName" placeholder="Squad name" value="" required />
+    <input class="rounded" type="text" id="sprintName" placeholder="Sprint name" value="" required />
+    <button class="primary" type="button" id="addNewBoard">
+        Add new board
+    </button>
+    <div class="spinner tertiary hidden" id="sendButtonSpinner"></div>
 </div>
 <hr />
-<div class="container-fluid">
-    <div class="row" id="boardContainer">
-        @{ 
-            foreach (var each in Model.Data) 
-            {
-                <div class="col-3 mb-3" id="container-@each.Slug">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">@each.Name</h5>
-                            <p class="card-text">
-                                @each.Description
-                            </p>
-                            <a href="/board/view/@each.Slug" class="btn btn-primary">Go to board</a>
-                            <button class="btn btn-warning archive-action" type="button" id="@each.Slug">
-                                Archive
-                                <span class="spinner-border spinner-border-sm hidden archive-spinner" 
-                                      id="spinner-@each.Slug" 
-                                      role="status" 
-                                      aria-hidden="true">
-                                </span>
-                            </button>
-                        </div>
-                    </div>
+
+<div class="row" id="boardContainer">
+    @{ 
+        foreach (var each in Model.Data) 
+        {
+            <div class="card" id="container-@each.Slug">
+                <h5 class="card-title">@each.Name</h5>
+                <p class="card-text"> 
+                    @each.Description
+                </p>
+                <div class="row">
+                    <a href="/board/view/@each.Slug" class="button small primary">
+                        <span class="icon-link inverse"></span> Go to board
+                    </a>
+                    <button class="small button inverse archive-action" type="button" id="@each.Slug">
+                        Archive
+                    </button>
+                    <span class="spinner tertiary hidden archive-spinner"
+                          id="spinner-@each.Slug"
+                          role="status"
+                          aria-hidden="true">
+                    </span>
                 </div>
-            }
+            </div>
         }
-    </div>
+    }
 </div>
 
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        var @nameof(retrowebcore.Hubs.BoardHub.hubAddNewBoard) = '@retrowebcore.Hubs.BoardHub.hubAddNewBoard';
+        var @nameof(retrowebcore.Hubs.BoardHub.hubNewBoardEvent) = '@retrowebcore.Hubs.BoardHub.hubNewBoardEvent';
+
+        var @nameof(retrowebcore.Hubs.BoardHub.hubArchiveBoard) = '@retrowebcore.Hubs.BoardHub.hubArchiveBoard';
+        var @nameof(retrowebcore.Hubs.BoardHub.hubArchiveEvent) = '@retrowebcore.Hubs.BoardHub.hubArchiveEvent';
+
+        const SQUAD_TEMPLATE = '<[[SQUAD_NAME]]>';
+        const SPRINT_TEMPLATE = '<[[SPRINT_NAME]]>';
+        const SLUG_TEMPLATE = '<[[SLUG]]>';
+
+        var TEMPLATE = `
+            <div class="card" id="container-${SLUG_TEMPLATE}">
+                <h5 class="card-title">${SQUAD_TEMPLATE}</h5>
+                <p class="card-text">
+                    ${SPRINT_TEMPLATE}
+                </p>
+                <div class="row">
+                    <a href="/board/view/${SLUG_TEMPLATE}" class="button small primary">
+                        <span class="icon-link inverse"></span> Go to board
+                    </a>
+                    <button class="small button inverse archive-action" type="button" id="${SLUG_TEMPLATE}">
+                        Archive
+                    </button>
+                    <span class="spinner tertiary hidden archive-spinner"
+                          id="spinner-${SLUG_TEMPLATE}"
+                          role="status"
+                          aria-hidden="true">
+                    </span>
+                </div>
+            </div>
+        `;
+
+        function buildNewBoard(data) {
+            return TEMPLATE
+                .replace(SQUAD_TEMPLATE, data.squad)
+                .replace(SPRINT_TEMPLATE, data.sprint)
+                .replace(SLUG_TEMPLATE, data.slug)
+                .replace(SLUG_TEMPLATE, data.slug)
+                .replace(SLUG_TEMPLATE, data.slug)
+                .replace(SLUG_TEMPLATE, data.slug);
+        }
+    </script>
     <script src="~/js/board-hub.js"></script>
 }

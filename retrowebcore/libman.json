@@ -378,6 +378,14 @@
         "dist/icons/zoom-in.svg",
         "dist/icons/zoom-out.svg"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "mini.css@3.0.1",
+      "destination": "wwwroot/lib/mini.css/",
+      "files": [
+        "mini-default.min.css"
+      ]
     }
   ]
 }
