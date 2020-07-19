@@ -38,14 +38,23 @@ namespace retrowebcore.Handlers.Boards
             var hasPrev = false;
             if (data.Count > 0)
             {
-                var soonest = data.First().Created;
-                var oldest = data.Last().Created;
+                var soonest = data.First();
+                var oldest = data.Last();
                 hasMore = await _context.Boards
                     .OrderBy(x => x.Created)
-                    .AnyAsync(x => x.DeletedAt == null && x.Deletor == null && x.Created < oldest);
+                    .AnyAsync(x => 
+                        x.DeletedAt == null && 
+                        x.Deletor == null && 
+                        x.Created > oldest.Created &&
+                        x.Id != oldest.Id);
                 hasPrev = await _context.Boards
                     .OrderBy(x => x.Created)
-                    .AnyAsync(x => x.DeletedAt == null && x.Deletor == null && x.Created > soonest);
+                    .Skip(r.Offset)
+                    .AnyAsync(x => 
+                        x.DeletedAt == null && 
+                        x.Deletor == null && 
+                        x.Created < soonest.Created &&
+                        x.Id != soonest.Id);
             }
 
             return new BoardListResponse { HasPrev = hasPrev, HasNext = hasMore, Data = data };
