@@ -43,6 +43,7 @@ connection.on(hubNewCardEvent, function (responseJson) {
     $(`#${cardTypes[response.CardType]}LaneAddChildSpinner`).addClass("hidden");
     $(`#${cardTypes[response.CardType]}Lane`).append(newBoard);
     feather.replace(); //to show icon in new card
+    
 });
 
 connection.start().then(function () {

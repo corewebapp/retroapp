@@ -27,17 +27,52 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/feather-icons/dist/feather.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script>
         feather.replace()
     </script>
     <script>
-        
-
         var @nameof(retrowebcore.Hubs.CardHub.hubAddNewCard) = '@retrowebcore.Hubs.CardHub.hubAddNewCard';
         var @nameof(retrowebcore.Hubs.CardHub.hubNewCardEvent) = '@retrowebcore.Hubs.CardHub.hubNewCardEvent';
+
+        var portal = document.createElement('portal');
+        var portalClicked = false;
+
+        function changeAHrefBehavior() {
+            document.querySelectorAll("a").forEach(function (each) {
+                each.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    var spinner = document.createElement('span');
+                    spinner.classList.add('spinner');
+                    spinner.classList.add('tertiary');
+                    spinner.clientHeight = each.clientHeight;
+                    //spinner.style.float = 'left';
+                    each.append(spinner);
+                    
+                    var u = new URL(e.target.href);
+                    u.hash = "";
+                    portal.addEventListener("load", e => {
+                        portal.activate();
+                    });
+                    portal.src = u.href;
+                    portal.style.display = 'none';
+                    document.body.appendChild(portal);
+
+                    //portal.activate();
+
+                    if (window.portalHost) {
+                        window.portalHost.postMessage({ done: true, frm: location.pathname });
+                    }
+                });
+            });
+
+        }
+
+        changeAHrefBehavior();
+        
+
+
     </script>
     @RenderSection("Scripts", required: false)
 </body>

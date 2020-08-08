@@ -105,11 +105,6 @@ namespace retrowebcore.Persistences
             foreach (var entry in ChangeTracker.Entries())
             {
                 var state = entry.State.ToString();
-                if (state == Added && entry.Entity is AppUser user)
-                {
-                    if (user.Id == 0)
-                        user.Id = user.Id + 1;
-                }
 
                 if (entry.Entity is IAuditable auditable)
                 {
