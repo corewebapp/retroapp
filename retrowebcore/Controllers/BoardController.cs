@@ -17,6 +17,7 @@ namespace retrowebcore.Controllers
     {
         const string BoardList = nameof(BoardList);
         const string BoardView = nameof(BoardView);
+        const string BoardEdit = nameof(BoardEdit);
 
         AppDbContext c;
 
@@ -35,6 +36,23 @@ namespace retrowebcore.Controllers
 
             var board = await _mediator.Send(new ViewBoardRequest{ Slug = id });
             return View(BoardView, board);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var board = await _mediator.Send(new ViewBoardRequest { Slug = id });
+            return View(BoardEdit, board);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Board board)
+        {
+            var result = await _mediator.Send(new EditBoardRequest { Board = board });
+            return View(BoardEdit, result);
         }
 
         public IActionResult Privacy() => View();

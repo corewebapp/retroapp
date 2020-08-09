@@ -11,7 +11,8 @@ namespace retrowebcore.Models
         Liked = 1,
         Lacked = 2,
         Learned = 3,
-        LongedFor = 4
+        LongedFor = 4,
+        ActionItem = 5
     }
 
     public class Card : IIdName, IAuditable, ISoftDeletable

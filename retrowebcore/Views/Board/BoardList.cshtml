@@ -14,18 +14,22 @@
 <hr />
 
 <div class="row" id="boardContainer">
-    @{ 
-        foreach (var each in Model.Data) 
+    @{
+        foreach (var each in Model.Data)
         {
             <div class="card" id="container-@each.Slug">
                 <h5 class="card-title">@each.Name</h5>
-                <p class="card-text"> 
+                <p class="card-text">
                     @each.Description
                 </p>
                 <div class="row">
                     <a href="/board/view/@each.Slug" class="button small primary">
                         <span class="icon-link inverse"></span> Go to board
                     </a>
+                    <a href="/board/edit/@each.Slug" class="button small tertiary">
+                        <span class="icon-edit inverse"></span> Edit
+                    </a>
+
                     <button class="small button inverse archive-action" type="button" id="@each.Slug">
                         Archive
                     </button>
@@ -38,6 +42,9 @@
             </div>
         }
     }
+</div>
+<div>
+    
 </div>
 
 @section Scripts {
@@ -53,7 +60,7 @@
         const SPRINT_TEMPLATE = '<[[SPRINT_NAME]]>';
         const SLUG_TEMPLATE = '<[[SLUG]]>';
 
-        var TEMPLATE = `
+        var BOARD_TEMPLATE = `
             <div class="card" id="container-${SLUG_TEMPLATE}">
                 <h5 class="card-title">${SQUAD_TEMPLATE}</h5>
                 <p class="card-text">
@@ -62,6 +69,9 @@
                 <div class="row">
                     <a href="/board/view/${SLUG_TEMPLATE}" class="button small primary">
                         <span class="icon-link inverse"></span> Go to board
+                    </a>
+                    <a href="/board/edit/${SLUG_TEMPLATE}" class="button small tertiary">
+                        <span class="icon-edit inverse"></span> Edit
                     </a>
                     <button class="small button inverse archive-action" type="button" id="${SLUG_TEMPLATE}">
                         Archive
@@ -76,9 +86,10 @@
         `;
 
         function buildNewBoard(data) {
-            return TEMPLATE
+            return BOARD_TEMPLATE
                 .replace(SQUAD_TEMPLATE, data.squad)
                 .replace(SPRINT_TEMPLATE, data.sprint)
+                .replace(SLUG_TEMPLATE, data.slug)
                 .replace(SLUG_TEMPLATE, data.slug)
                 .replace(SLUG_TEMPLATE, data.slug)
                 .replace(SLUG_TEMPLATE, data.slug)

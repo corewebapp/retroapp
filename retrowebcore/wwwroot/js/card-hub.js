@@ -6,6 +6,7 @@ cardTypes[1] = "liked";
 cardTypes[2] = "lacked";
 cardTypes[3] = "learned";
 cardTypes[4] = "longedfor";
+cardTypes[5] = "actionitem";
 
 const CARD_ID_TEMPLATE = '<[[CARD_ID_TEMPLATE]]>';
 const CARD_CONTENT_TEMPLATE = '<[[CARD_CONTENT_TEMPLATE]]>';

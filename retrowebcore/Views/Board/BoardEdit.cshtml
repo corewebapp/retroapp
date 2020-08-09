@@ -1,0 +1,11 @@
+﻿@model retrowebcore.Models.Board
+
+<form asp-action="Edit">
+    <input type="hidden" asp-for="Slug" />
+    <div class="row">
+        <input class="rounded" type="text" name="Name" value="@Model.Name" />
+        <input class="rounded" type="text" name="Description" value="@Model.Description" />
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+    <hr />
+</form>
