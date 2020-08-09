@@ -4,12 +4,19 @@
 }
 
 <div class="row">
-    <input class="rounded" type="text" id="squadName" placeholder="Squad name" value="" required />
-    <input class="rounded" type="text" id="sprintName" placeholder="Sprint name" value="" required />
-    <button class="primary" type="button" id="addNewBoard">
-        Add new board
-    </button>
-    <div class="spinner tertiary hidden" id="sendButtonSpinner"></div>
+    <div class="col-md-6 col-sm-12">
+        <input class="rounded" type="text" id="squadName" placeholder="Squad name" value="" required />
+        <input class="rounded" type="text" id="sprintName" placeholder="Sprint name" value="" required />
+        <button class="primary" type="button" id="addNewBoard">
+            Add new board
+        </button>
+        <div class="spinner tertiary hidden" id="sendButtonSpinner"></div>
+    </div>
+    <div class="col-md-6" id="searchContainer">
+        <span class="icon-search"></span>
+        <input class="rounded" type="text" id="searchBoard" placeholder="search board" value=""  />
+        <a href="/board/search?q=" class="hidden" id="searchHref">search</a>
+    </div>
 </div>
 <hr />
 
@@ -95,6 +102,15 @@
                 .replace(SLUG_TEMPLATE, data.slug)
                 .replace(SLUG_TEMPLATE, data.slug);
         }
+
+        var searchNode = document.getElementById('searchBoard');
+        searchNode.addEventListener('keyup', ({ key }) => {
+            if (key === "Enter") {
+                addSpinner(document.getElementById('searchContainer'));
+                var link = document.getElementById("searchHref").href;
+                openHrefWithPortal(`${link}${searchNode.value}`);
+            }
+        })
     </script>
     <script src="~/js/board-hub.js"></script>
 }

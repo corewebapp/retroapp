@@ -18,6 +18,7 @@ namespace retrowebcore.Controllers
         const string BoardList = nameof(BoardList);
         const string BoardView = nameof(BoardView);
         const string BoardEdit = nameof(BoardEdit);
+        const string BoardSearch = nameof(BoardSearch);
 
         AppDbContext c;
 
@@ -56,6 +57,8 @@ namespace retrowebcore.Controllers
         }
 
         public IActionResult Privacy() => View();
+
+        public IActionResult Search(string q) => View(BoardSearch, q);
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() =>

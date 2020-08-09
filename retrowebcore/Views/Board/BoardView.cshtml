@@ -59,6 +59,10 @@
 
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        var @nameof(retrowebcore.Hubs.CardHub.hubAddNewCard) = '@retrowebcore.Hubs.CardHub.hubAddNewCard';
+        var @nameof(retrowebcore.Hubs.CardHub.hubNewCardEvent) = '@retrowebcore.Hubs.CardHub.hubNewCardEvent';
+    </script>
     <script src="~/js/board-view.js"></script>
     <script src="~/js/card-hub.js"></script>
 }

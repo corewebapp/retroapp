@@ -2,30 +2,36 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function addSpinner(node) {
+    var spinner = document.createElement('span');
+    spinner.classList.add('spinner');
+    spinner.classList.add('tertiary');
+    spinner.clientHeight = node.clientHeight;
+    //spinner.style.float = 'left';
+    node.append(spinner);
+}
+
+function openHrefWithPortal(link) {
+    var u = new URL(link);
+    u.hash = "";
+    portal.addEventListener("load", e => {
+        portal.activate();
+    });
+    portal.src = u.href;
+    portal.style.display = 'none';
+    document.body.appendChild(portal);
+}
+
 if ('HTMLPortalElement' in window) {
     var portal = document.createElement('portal');
     var portalClicked = false;
     document.querySelectorAll("a").forEach(function (each) {
         each.addEventListener("click", function (e) {
             e.preventDefault();
-            var spinner = document.createElement('span');
-            spinner.classList.add('spinner');
-            spinner.classList.add('tertiary');
-            spinner.clientHeight = each.clientHeight;
-            //spinner.style.float = 'left';
-            each.append(spinner);
-
-            var u = new URL(e.target.href);
-            u.hash = "";
-            portal.addEventListener("load", e => {
-                portal.activate();
-            });
-            portal.src = u.href;
-            portal.style.display = 'none';
-            document.body.appendChild(portal);
-
-            //portal.activate();
-
+            addSpinner(each);
+            openHrefWithPortal(e.target.href);
+            
             if (window.portalHost) {
                 window.portalHost.postMessage({ done: true, frm: location.pathname });
             }
@@ -35,12 +41,7 @@ if ('HTMLPortalElement' in window) {
     document.querySelectorAll("a").forEach(function (each) {
         each.addEventListener("click", function (e) {
             e.preventDefault();
-            var spinner = document.createElement('span');
-            spinner.classList.add('spinner');
-            spinner.classList.add('tertiary');
-            spinner.clientHeight = each.clientHeight;
-            //spinner.style.float = 'left';
-            each.append(spinner);
+            addSpinner(each);
             window.location = e.target.href;
         });
     });
