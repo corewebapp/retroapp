@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using NpgsqlTypes;
 using retrowebcore.Persistences;
 
 namespace retrowebcore.Migrations
@@ -17,7 +18,7 @@ namespace retrowebcore.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
@@ -228,6 +229,10 @@ namespace retrowebcore.Migrations
                     b.Property<long>("Updator")
                         .HasColumnName("updator")
                         .HasColumnType("bigint");
+
+                    b.Property<NpgsqlTsVector>("search_vector")
+                        .HasColumnName("search_vector")
+                        .HasColumnType("tsvector");
 
                     b.HasKey("Id")
                         .HasName("pk_boards");

@@ -2,17 +2,17 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-<label class="button col-md-7" ></label>
 @if (SignInManager.IsSignedIn(User))
 {
     
-    <a class="button"  asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-    <button type="submit" class="button">Logout</button>
-    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-    </form>
+    <a class="button" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+        Hello @User.Identity.Name!
+    </a>
+    <a href="/identity/account/logout" class="button">Logout</a>
+    
 }
 else
 {
-    <a  asp-area="Identity" asp-page="/Account/Register">Register</a>
-    <a  asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <a class="button" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <a class="button" asp-area="Identity" asp-page="/Account/Login">Login</a>
 }

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
+using NpgsqlTypes;
 using retrowebcore.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
@@ -36,6 +36,7 @@ namespace retrowebcore.Persistences
         const string Deleted = "Deleted";
         const string InvalidPrefix = "asp_net_";
         const string ValidPrefix = "app_";
+        const string SearchablePropertyVector = "search_vector";
 
         /// <summary>
         /// well, this is quite hacky, for testing purpose. Dont touch this in production, keep it null
@@ -57,6 +58,8 @@ namespace retrowebcore.Persistences
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            AddShadowPropertyToSearchables(builder);
+
             base.OnModelCreating(builder);
             foreach (var entity in builder.Model.GetEntityTypes())
             {
@@ -68,6 +71,23 @@ namespace retrowebcore.Persistences
             }
 
             builder.Entity<Board>().HasIndex(g => g.Slug).IsUnique();
+
+
+        }
+
+        private static void AddShadowPropertyToSearchables(ModelBuilder builder)
+        {
+            var type = typeof(ISearchable);
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => type.IsAssignableFrom(p));
+
+            foreach (var eachType in types)
+            {
+                if (eachType.IsInterface) continue;
+                var searchable = builder.Entity(eachType);
+                searchable.Property<NpgsqlTsVector>(SearchablePropertyVector);
+            }
         }
 
         protected string GetScopedUserId() 
@@ -126,6 +146,19 @@ namespace retrowebcore.Persistences
                                 auditable.Updator = userLong.Value;
                         }
 
+                    }
+                }
+
+                if (entry.Entity is ISearchable searchable) 
+                {
+                    if (state == Added || state == Modified) 
+                    {
+                        var content = searchable.GetSearchableContent();
+                        if (!string.IsNullOrWhiteSpace(content))
+                        {
+                            entry.Property(SearchablePropertyVector).CurrentValue =
+                                NpgsqlTsVector.Parse(content);
+                        }
                     }
                 }
 
