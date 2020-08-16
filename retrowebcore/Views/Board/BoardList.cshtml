@@ -20,6 +20,13 @@
 </div>
 <hr />
 
+@if (!string.IsNullOrWhiteSpace(TempData[R.BoardQueryKey]?.ToString()))
+{
+    <div class="row">
+        <span> Showing result of search with query: @TempData[R.BoardQueryKey]  </span>
+    </div>
+}
+
 <div class="row" id="boardContainer">
     @{
         foreach (var each in Model.Data)

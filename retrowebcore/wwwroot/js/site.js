@@ -13,14 +13,20 @@ function addSpinner(node) {
 }
 
 function openHrefWithPortal(link) {
-    var u = new URL(link);
-    u.hash = "";
-    portal.addEventListener("load", e => {
-        portal.activate();
-    });
-    portal.src = u.href;
-    portal.style.display = 'none';
-    document.body.appendChild(portal);
+    if ('HTMLPortalElement' in window) {
+        var u = new URL(link);
+        u.hash = "";
+        var portal = document.createElement('portal');
+        portal.addEventListener("load", e => {
+            portal.activate();
+        });
+        portal.src = u.href;
+        portal.style.display = 'none';
+        document.body.appendChild(portal);
+    } else
+    {
+        window.location = link;
+    }
 }
 
 if ('HTMLPortalElement' in window) {

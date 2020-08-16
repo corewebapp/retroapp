@@ -230,6 +230,10 @@ namespace retrowebcore.Migrations
                         .HasColumnName("updator")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("search_content")
+                        .HasColumnName("search_content")
+                        .HasColumnType("text");
+
                     b.Property<NpgsqlTsVector>("search_vector")
                         .HasColumnName("search_vector")
                         .HasColumnType("tsvector");
@@ -240,6 +244,10 @@ namespace retrowebcore.Migrations
                     b.HasIndex("Slug")
                         .IsUnique()
                         .HasName("ix_boards_slug");
+
+                    b.HasIndex("search_vector")
+                        .HasName("ix_boards_search_vector")
+                        .HasAnnotation("Npgsql:IndexMethod", "GIN");
 
                     b.ToTable("boards");
                 });

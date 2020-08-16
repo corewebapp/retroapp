@@ -58,7 +58,11 @@ namespace retrowebcore.Controllers
 
         public IActionResult Privacy() => View();
 
-        public IActionResult Search(string q) => View(BoardSearch, q);
+        public async Task<IActionResult> Search(string q)
+        {
+            TempData[R.BoardQueryKey] = q;
+            return View(BoardList, await _mediator.Send(new SearchBoardRequest(q)));
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() =>

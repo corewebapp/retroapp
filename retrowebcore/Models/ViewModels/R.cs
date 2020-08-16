@@ -8,6 +8,6 @@ namespace retrowebcore
     public partial class R
     {
         public const string RootContainerClass = nameof(RootContainerClass);
-
+        public const string BoardQueryKey = nameof(BoardQueryKey);
     }
 }

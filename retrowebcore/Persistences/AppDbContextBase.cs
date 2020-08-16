@@ -36,7 +36,8 @@ namespace retrowebcore.Persistences
         const string Deleted = "Deleted";
         const string InvalidPrefix = "asp_net_";
         const string ValidPrefix = "app_";
-        const string SearchablePropertyVector = "search_vector";
+        public const string SearchablePropertyVector = "search_vector";
+        public const string SearchableContent = "search_content";
 
         /// <summary>
         /// well, this is quite hacky, for testing purpose. Dont touch this in production, keep it null
@@ -87,6 +88,10 @@ namespace retrowebcore.Persistences
                 if (eachType.IsInterface) continue;
                 var searchable = builder.Entity(eachType);
                 searchable.Property<NpgsqlTsVector>(SearchablePropertyVector);
+                searchable.HasIndex(SearchablePropertyVector)
+                    .HasMethod("GIN");
+
+                searchable.Property<string>(SearchableContent);
             }
         }
 
@@ -155,10 +160,7 @@ namespace retrowebcore.Persistences
                     {
                         var content = searchable.GetSearchableContent();
                         if (!string.IsNullOrWhiteSpace(content))
-                        {
-                            entry.Property(SearchablePropertyVector).CurrentValue =
-                                NpgsqlTsVector.Parse(content);
-                        }
+                            entry.Property(SearchableContent).CurrentValue = content;
                     }
                 }
 
