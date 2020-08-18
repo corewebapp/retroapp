@@ -1,37 +1,37 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - retrowebcore</title>
-    <link rel="stylesheet" href="~/lib/mini.css/mini-default.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    @RenderSection("Heads", required: false)
-</head>
-<body>
-    <header class="row">
-        <a class="logo"  asp-area="" asp-controller="Board" asp-action="List">retrowebcore</a>
-        <a class="button" asp-area="" asp-controller="Board" asp-action="List">Boards</a>
-        <a class="button" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        <partial name="_LoginPartial" />
-    </header>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - retrowebcore</title>
+        <link rel="stylesheet" href="~/lib/mini.css/mini-default.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+        @RenderSection("Heads", required: false)
+    </head>
+    <body>
+        <header class="row">
+            <a class="logo"   asp-controller="Board" asp-action="List"    > retrowebcore </a>
+            <a class="button" asp-controller="Board" asp-action="List"    > Boards       </a>
+            <a class="button" asp-controller="Home"  asp-action="Privacy" > Privacy      </a>
+            <partial name="_LoginPartial" />
+        </header>
 
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - retrowebcore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2020 - retrowebcore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/feather-icons/dist/feather.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
-        feather.replace()
-    </script>
-    @RenderSection("Scripts", required: false)
-</body>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/feather-icons/dist/feather.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script>
+            feather.replace()
+        </script>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

@@ -9,6 +9,7 @@ namespace retrowebcore.Hubs
 {
     public class BoardHub : Hub
     {
+        #region some codes
         public const string hubAddNewBoard = nameof(hubAddNewBoard);
         public const string hubNewBoardEvent = nameof(hubNewBoardEvent);
         
@@ -17,8 +18,7 @@ namespace retrowebcore.Hubs
 
         readonly IMediator _mediator;
         public BoardHub(IMediator m) => _mediator = m;
-
-
+        #endregion
         [HubMethodName(hubAddNewBoard)]
         public async Task addNewBoard(string squad, string sprint)
         {
@@ -26,7 +26,7 @@ namespace retrowebcore.Hubs
             var json = JsonConvert.SerializeObject(new { squad = board.Name, sprint = board.Description, slug = board.Slug });
             await Clients.All.SendAsync(hubNewBoardEvent, json);
         }
-
+        #region methods
         [HubMethodName(hubArchiveBoard)]
         public async Task archiveBoard(string slugStr)
         {
@@ -36,5 +36,6 @@ namespace retrowebcore.Hubs
             await _mediator.Send(new ArchiveBoardRequest { Slug = slug });
             await Clients.All.SendAsync(hubArchiveEvent, slug);
         }
+        #endregion
     }
 }

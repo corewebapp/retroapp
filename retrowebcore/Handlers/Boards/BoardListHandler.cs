@@ -34,6 +34,7 @@ namespace retrowebcore.Handlers.Boards
                 .Skip(r.Offset)
                 .Take(r.Limit)
                 .ToListAsync();
+            #region some other logic
             var hasMore = false;
             var hasPrev = false;
             if (data.Count > 0)
@@ -56,6 +57,7 @@ namespace retrowebcore.Handlers.Boards
                         x.Created < soonest.Created &&
                         x.Id != soonest.Id);
             }
+            #endregion
 
             return new BoardListResponse { HasPrev = hasPrev, HasNext = hasMore, Data = data };
         }

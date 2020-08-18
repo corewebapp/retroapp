@@ -13,6 +13,8 @@ namespace retrowebcore.Handlers.Boards
     public class ViewBoardRequest : IRequest<BoardDetail>
     { 
         public Guid Slug { get; set; }
+        public ViewBoardRequest() { }
+        public ViewBoardRequest(Guid s) => Slug = s;
     }
 
     public class ViewBoardHandler : BoardHandlerBase, IRequestHandler<ViewBoardRequest, BoardDetail> 

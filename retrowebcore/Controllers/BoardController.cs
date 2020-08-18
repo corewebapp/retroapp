@@ -15,57 +15,47 @@ namespace retrowebcore.Controllers
     [Authorize]
     public class BoardController : BaseController<BoardController>
     {
+        #region consts
         const string BoardList = nameof(BoardList);
         const string BoardView = nameof(BoardView);
         const string BoardEdit = nameof(BoardEdit);
         const string BoardSearch = nameof(BoardSearch);
+        #endregion
+        public BoardController(ILogger<BoardController> l, IMediator m) : base(l, m) { }
 
-        AppDbContext c;
-
-        public BoardController(ILogger<BoardController> l, IMediator m, AppDbContext c) : base(l,m) 
+        public async Task<IActionResult> List()
         {
-            this.c = c;
+            var boards = await _mediator.Send(new BoardListRequest());
+            return View(BoardList, boards);
         }
-
-        public async Task<IActionResult> List() =>
-            View(BoardList, await _mediator.Send(new BoardListRequest()));
 
         public async Task<IActionResult> View(Guid id) 
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var board = await _mediator.Send(new ViewBoardRequest{ Slug = id });
+            var board = await _mediator.Send(new ViewBoardRequest(id));
             return View(BoardView, board);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var board = await _mediator.Send(new ViewBoardRequest { Slug = id });
+            var board = await _mediator.Send(new ViewBoardRequest(id));
             return View(BoardEdit, board);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Board board)
         {
-            var result = await _mediator.Send(new EditBoardRequest { Board = board });
+            var result = await _mediator.Send(new EditBoardRequest(board));
             return View(BoardEdit, result);
         }
-
-        public IActionResult Privacy() => View();
 
         public async Task<IActionResult> Search(string q)
         {
             TempData[R.BoardQueryKey] = q;
-            return View(BoardList, await _mediator.Send(new SearchBoardRequest(q)));
+            var boards = await _mediator.Send(new SearchBoardRequest(q));
+            return View(BoardList, boards);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() =>
-            View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        public IActionResult Privacy() => View();
     }
 }

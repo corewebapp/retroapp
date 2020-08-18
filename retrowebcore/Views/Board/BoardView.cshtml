@@ -9,7 +9,9 @@
 <div class="row flex-row flex-sm-nowrap">
     @for (int i = 0; i < BoardDetail.CardTypes.Count; i++)
     {
+
         var each = BoardDetail.CardTypes[i];
+        #region setups
         var typeInt = (int)each;
         if (each == CardType.Unknown)
             continue;
@@ -18,6 +20,7 @@
         var idLaneBase = $"{idLane}Base";
         var idButtonAdd = $"{idLane}AddChild"; //likedLaneAddChild | lackedLaneAddChild | learnedLaneAddChild | longedforLaneAddChild
         var idButtonAddSpinner = $"{idButtonAdd}Spinner";
+        #endregion 
         <div class="col-sm-6 col-md-2 col-xl-2">
             <div class="card" id="@idLaneBase">
                 <div class="card-body card-board">

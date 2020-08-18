@@ -13,6 +13,9 @@ namespace retrowebcore.Handlers.Boards
     public class EditBoardRequest : IRequest<BoardDetail> 
     {
         public Board Board { get; set; }
+
+        public EditBoardRequest() { }
+        public EditBoardRequest(Board b) => Board = b;
     }
 
     public class EditBoardHandler : BoardHandlerBase, IRequestHandler<EditBoardRequest, BoardDetail>

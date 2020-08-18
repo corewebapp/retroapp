@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace retrowebcore.Models
 {
-    public sealed class Board : IIdName, IAuditable, ISoftDeletable, ISearchable
+    public class Board : IIdName, IAuditable, ISoftDeletable, ISearchable
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +15,19 @@ namespace retrowebcore.Models
         public long Updator { get; set; }
         public DateTime Updated { get; set; }
         public long? Deletor { get; set; }
-        public DateTime? DeletedAt { get; set; }
+        public DateTime? DeletedAt 
+        {
+            get 
+            {
+                return _deletedAt;
+            }
+            set 
+            {
+                _deletedAt = value;
+            }
+        }
+
+        private DateTime? _deletedAt;
 
         public string GetSearchableContent() => $"{Name} {Description}";
     }
