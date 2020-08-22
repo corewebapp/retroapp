@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using retrowebcore.Hubs;
 using MediatR;
+using retrowebcore.Persistences.Repositories;
 
 namespace retrowebcore
 {
@@ -49,6 +50,7 @@ namespace retrowebcore
                builder.AddRazorRuntimeCompilation();
             }
 #endif
+            services.AddRepositories();
             services.AddSignalR();
             services.AddMediatR(typeof(Startup));
         }

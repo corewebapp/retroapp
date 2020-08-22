@@ -21,7 +21,7 @@ namespace retrowebcore.Handlers.Boards
         public bool ValidateSlug()
         {
             var canParseSLug = Guid.TryParse(BoardSlug, out Guid result);
-            var canParseType = Enum.TryParse<CardType>(TypeStr, out CardType cardType);
+            var canParseType = Enum.TryParse(TypeStr, out CardType cardType);
             if (canParseSLug && canParseType)
             {
                 Slug = result;
@@ -32,17 +32,17 @@ namespace retrowebcore.Handlers.Boards
         }
     }
 
-    public class CreateNewCardHandler : BoardHandlerBase, IRequestHandler<CreateNewCard, Card>
+    public class CreateNewCardHandler : IRequestHandler<CreateNewCard, Card>
     {
-        public CreateNewCardHandler(AppDbContext c) : base(c) { }
+        readonly IRepository<Board> _boardRepo;
+
+        public CreateNewCardHandler(IRepository<Board> b) => _boardRepo = b;
         public async Task<Card> Handle(CreateNewCard req, CancellationToken ct)
         {
             if (!req.ValidateSlug())
                 return null;
 
-            var board = await _context.Boards
-                    .Include(x => x.Cards)
-                    .FirstOrDefaultAsync(x => x.Slug == req.Slug);
+            var board = await _boardRepo.FirstOrDefault(x => x.Slug == req.Slug);
 
             if (board == null)
                 return null;
@@ -55,7 +55,7 @@ namespace retrowebcore.Handlers.Boards
                 SortOrder = order
             };
             board.Cards.Add(card);
-            await _context.SaveChangesAsync();
+            await _boardRepo.SaveChanges();
             return card;
         }
     }

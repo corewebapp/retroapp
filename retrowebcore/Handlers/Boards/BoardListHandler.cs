@@ -23,17 +23,22 @@ namespace retrowebcore.Handlers.Boards
     public class BoardListHandler : BoardHandlerBase, IRequestHandler<BoardListRequest, BoardListResponse>
     {
         static readonly string BoardListHandlerQuery = nameof(BoardListHandlerQuery);
-        public BoardListHandler(AppDbContext c): base(c) { }
+
+        readonly IRepository<Board> _boardRepo;
+
+        public BoardListHandler(AppDbContext c, IRepository<Board> b) : base(c) => _boardRepo = b;
 
         public async Task<BoardListResponse> Handle(BoardListRequest r, CancellationToken ct)
         {
-            var data = await _context.Boards
-                .TagWith(BoardListHandlerQuery)
-                .Where(x => x.Deletor == null && x.DeletedAt == null)
-                .OrderBy(x => x.Created)
-                .Skip(r.Offset)
-                .Take(r.Limit)
-                .ToListAsync();
+            var repoQuery = new RepoQuery<Board>
+            {
+                Predicate = x => x.Deletor == null && x.DeletedAt == null,
+                Skip = r.Offset,
+                Take = r.Limit,
+                OrderAscending = x => x.Created
+            };
+
+            var data = await _boardRepo.FindAll(repoQuery, BoardListHandlerQuery);
             #region some other logic
             var hasMore = false;
             var hasPrev = false;
@@ -43,11 +48,7 @@ namespace retrowebcore.Handlers.Boards
                 var oldest = data.Last();
                 hasMore = await _context.Boards
                     .OrderBy(x => x.Created)
-                    .AnyAsync(x => 
-                        x.DeletedAt == null && 
-                        x.Deletor == null && 
-                        x.Created > oldest.Created &&
-                        x.Id != oldest.Id);
+                    .AnyAsync();
                 hasPrev = await _context.Boards
                     .OrderBy(x => x.Created)
                     .Skip(r.Offset)

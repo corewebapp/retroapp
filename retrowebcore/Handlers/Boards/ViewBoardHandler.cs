@@ -17,17 +17,15 @@ namespace retrowebcore.Handlers.Boards
         public ViewBoardRequest(Guid s) => Slug = s;
     }
 
-    public class ViewBoardHandler : BoardHandlerBase, IRequestHandler<ViewBoardRequest, BoardDetail> 
+    public class ViewBoardHandler : IRequestHandler<ViewBoardRequest, BoardDetail> 
     {
         const string ViewBoardQuery = nameof(ViewBoardQuery);
-        public ViewBoardHandler(AppDbContext c) : base(c) { }
+        readonly IRepository<Board> _boardRepo;
+        public ViewBoardHandler(IRepository<Board> b) => _boardRepo = b;
 
         public async Task<BoardDetail> Handle(ViewBoardRequest request, CancellationToken ct)
         {
-            var board = await _context.Boards
-                .TagWith(ViewBoardQuery)
-                .Include(x => x.Cards)
-                .FirstOrDefaultAsync(x => x.Slug == request.Slug);
+            var board = await _boardRepo.FirstOrDefault(x => x.Slug == request.Slug, ViewBoardQuery);
             return new BoardDetail(board);
         }
     }
