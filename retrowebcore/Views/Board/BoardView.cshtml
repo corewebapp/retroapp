@@ -4,60 +4,59 @@
     ViewData["Title"] = "Board View";
 }
 
-<div id="board-id" data-name="@Model.Slug" class="hidden"></div>
+<div id="board-id" data-name="@Model.Slug" class="retro-board">
+    <div class="row flex-row flex-sm-nowrap">
+        @for (int i = 0; i < BoardDetail.CardTypes.Count; i++)
+        {
 
-<div class="row flex-row flex-sm-nowrap">
-    @for (int i = 0; i < BoardDetail.CardTypes.Count; i++)
-    {
+            var each = BoardDetail.CardTypes[i];
+            #region setups
+            var typeInt = (int)each;
+            if (each == CardType.Unknown)
+                continue;
+            var idcardPrefix = $"id{each}";
+            var idLane = $"{BoardDetail.Label[each].ToLower()}Lane".Replace(" ", "");
+            var idLaneBase = $"{idLane}Base";
+            var idButtonAdd = $"{idLane}AddChild"; //likedLaneAddChild | lackedLaneAddChild | learnedLaneAddChild | longedforLaneAddChild
+            var idButtonAddSpinner = $"{idButtonAdd}Spinner";
+            #endregion
 
-        var each = BoardDetail.CardTypes[i];
-        #region setups
-        var typeInt = (int)each;
-        if (each == CardType.Unknown)
-            continue;
-        var idcardPrefix = $"id{each}";
-        var idLane = $"{BoardDetail.Label[each].ToLower()}Lane".Replace(" ", "");
-        var idLaneBase = $"{idLane}Base";
-        var idButtonAdd = $"{idLane}AddChild"; //likedLaneAddChild | lackedLaneAddChild | learnedLaneAddChild | longedforLaneAddChild
-        var idButtonAddSpinner = $"{idButtonAdd}Spinner";
-        #endregion 
-        <div class="col-sm-6 col-md-2 col-xl-2">
-            <div class="card" id="@idLaneBase">
-                <div class="card-body card-board">
-                    <h6 class="card-title text-uppercase text-truncate py-1">@BoardDetail.Label[each]</h6>
-                    <div class="items" id="@idLane">
-                        @for (int j = 0; j < Model.Cards[each].Count; j++)
-                        {
-                            var idCard = Model.Cards[each][j].Slug;
-                            <div class="card draggable shadow-sm dropzone"
-                                 id="@idCard" draggable="true"
-                                 ondragstart="drag(event)"
-                                 ondrop="merge(event)"
-                                 ondragover="allowDrop(event)"
-                                 ondragleave="clearDrop(event)">
-                                <div class="card-body p-1">
-                                    <p>
-                                        This is a description of a item on the board.
-                                    </p>
-                                    <div class="row pl-3">
-                                        <button class="btn btn-primary btn-sm col-10">View</button>
-                                        <span class="col-2" data-feather="thumbs-up"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+            @*<div class="col-sm-6 col-md-2 col-xl-2 retro-column">*@
+        <div class="retro-column" id="@idLaneBase">
+            <div class="retro-header @idLaneBase">
+                <div class="retro-header-text">@BoardDetail.Label[each]</div>
+            </div>
+            @for (int j = 0; j < Model.Cards[each].Count; j++)
+            {
+                var idCard = Model.Cards[each][j].Slug;
+                <div class="card retro-card draggable shadow-sm dropzone"
+                     id="@idCard" draggable="true"
+                     ondragstart="drag(event)"
+                     ondrop="merge(event)"
+                     ondragover="allowDrop(event)"
+                     ondragleave="clearDrop(event)">
+                    <div class="retro-card-body">
+                        <p>
+                            This is a description of a item on the board.
+                        </p>
+                        <div class="float-right">
+                            <button class="float-right" data-feather="eye">view</button>
+                            <span class="col-2" data-feather="thumbs-up"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
             <div>
-                <button type="button" class="btn btn-light btn-lg btn-block lane-add-button" id="@idButtonAdd" data-type="@each">
-                    Add new item
+                <button class="retro-button grow" id="@idButtonAdd" data-type="@each">
+                    New Item
                     <span class="spinner-border spinner-border-sm hidden" id="@idButtonAddSpinner" role="status" aria-hidden="true"></span>
                 </button>
             </div>
         </div>
-    }
+        }
+    </div>
+
 </div>
 
 @section Scripts {
