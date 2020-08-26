@@ -1,5 +1,134 @@
-﻿.hidden {
-  display: none;
+﻿
+
+:root {
+    --fore-color: #111;
+    --secondary-fore-color: #444;
+    --back-color: #f8f8f8;
+    --secondary-back-color: #f0f0f0;
+    --blockquote-color: #f57c00;
+    --pre-color: #1565c0;
+    --border-color: #aaa;
+    --secondary-border-color: #ddd;
+    --heading-ratio: 1.19;
+    --universal-margin: 0.5rem;
+    --universal-padding: 0.5rem;
+    --universal-border-radius: 0.125rem;
+    --a-link-color: #444;
+    --a-visited-color: #119da4;
+}
+
+/* Navigation module CSS variable definitions */
+:root {
+    --header-back-color: #119da4;
+    --header-hover-back-color: #87e8de;
+    --header-fore-color: #f8f8f8;
+    --header-border-color: #ddd;
+    --nav-back-color: #f8f8f8;
+    --nav-hover-back-color: #f0f0f0;
+    --nav-fore-color: #444;
+    --nav-border-color: #ddd;
+    --nav-link-color: #0277bd;
+    --footer-fore-color: #444;
+    --footer-back-color: #f8f8f8;
+    --footer-border-color: #ddd;
+    --footer-link-color: #f0f0f0;
+    --drawer-back-color: #f8f8f8;
+    --drawer-hover-back-color: #f0f0f0;
+    --drawer-border-color: #ddd;
+    --drawer-close-color: #444;
+}
+
+/* Card component CSS variable definitions */
+:root {
+    --card-back-color: #f8f8f8;
+    --card-fore-color: #111;
+    --card-border-color: #ddd;
+}
+
+/* Input_control module CSS variable definitions */
+:root {
+    --form-back-color: #f0f0f0;
+    --form-fore-color: #111;
+    --form-border-color: #ddd;
+    --input-back-color: #f8f8f8;
+    --input-fore-color: #111;
+    --input-border-color: #ddd;
+    --input-focus-color: #0288d1;
+    --input-invalid-color: #d32f2f;
+    --button-back-color: #119da4;
+    --button-hover-back-color: #dcdcdc;
+    --button-fore-color: #212121;
+    --button-border-color: transparent;
+    --button-hover-border-color: transparent;
+    --button-group-border-color: rgba(124, 124, 124, 0.54);
+}
+
+/* Table module CSS variable definitions. */
+:root {
+    --table-border-color: #aaa;
+    --table-border-separator-color: #666;
+    --table-head-back-color: #e6e6e6;
+    --table-head-fore-color: #111;
+    --table-body-back-color: #f8f8f8;
+    --table-body-fore-color: #111;
+    --table-body-alt-back-color: #eee;
+}
+
+:root {
+    --table-body-alt-back-color: #eee;
+}
+
+:root {
+    --table-body-hover-back-color: #90caf9;
+}
+
+/* Contextual module CSS variable definitions */
+:root {
+    --mark-back-color: #0277bd;
+    --mark-fore-color: #fafafa;
+}
+
+:root {
+    --toast-back-color: #424242;
+    --toast-fore-color: #fafafa;
+}
+
+:root {
+    --tooltip-back-color: #212121;
+    --tooltip-fore-color: #fafafa;
+}
+
+:root {
+    --modal-overlay-color: rgba(0, 0, 0, 0.45);
+    --modal-close-color: #444;
+    --modal-close-hover-color: #f0f0f0;
+}
+
+:root {
+    --collapse-label-back-color: #e8e8e8;
+    --collapse-label-fore-color: #212121;
+    --collapse-label-hover-back-color: #f0f0f0;
+    --collapse-selected-label-back-color: #ececec;
+    --collapse-border-color: #ddd;
+    --collapse-content-back-color: #fafafa;
+    --collapse-selected-label-border-color: #0277bd;
+}
+
+:root {
+    --spinner-back-color: #ddd;
+    --spinner-fore-color: #555;
+}
+
+/* Utility module CSS variable definitions */
+:root {
+    --generic-border-color: rgba(0, 0, 0, 0.3);
+    --generic-box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.125), 0 0.125rem 0.125rem -0.125rem rgba(0, 0, 0, 0.25);
+}
+
+/* Progess module CSS variable definitions */
+:root {
+    --progress-back-color: #ddd;
+    --progress-fore-color: #555;
 }
 
 .card.draggable {
@@ -10,29 +139,153 @@
 .droppable {
     background-color: var(--success);
     min-height: 120px;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
 }
 
-#likedLaneBase {
-    background-color: #d9f7be
+
+
+
+
+html, * {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, sans-serif;
+    line-height: 1;
+    -webkit-text-size-adjust: 100%;
+}
+html, body {
+    background-color: #000000;
+    height: 100%;
+    padding: 0;
+    margin: 0;
 }
 
-#lackedLaneBase {
-    background-color: #ffccc7
+header {
+    /*background-color: #119da4;*/
+    border: none;
+    height: 50px;
+    padding: 0;
 }
 
-#learnedLaneBase {
-    background-color: #bae7ff
+header .logo {
+    font-size: 1.75rem;
+    padding: 8px 0 0 5px;
+    text-decoration: none;
 }
 
-#longedforLaneBase {
-    background-color: #efdbff
+header .button{
+    background-color: #119da4;
 }
 
-#actionitemLaneBase {
-    background-color: #87e8de
+#wrapper {
+    background-color: #ffffff;
+    color: #ffffff;
+    display: block;
+    padding: 0;
+    margin: 0;
+    height: -moz-calc(100% - 85px);
+    height: -webkit-calc(100% - 85px);
+    height: calc(100% - 85px);
+    overflow-y: auto;
 }
 
-.card-body.card-board {
-    padding: 1em !important;
+
+
+footer {
+    background-color: #119da4;
+    color: #ececec;
+    border: none;
+    height:35px;
+    padding:0;
+}
+
+
+.retro-board {
+    font-family: Poppins;
+    background-color: #ffffff;
+    padding: 0;
+    margin: 0 auto; /* Center the DIV horizontally */
+}
+
+.retro-column {
+    font-family: Poppins;
+    background-color: #F3F6F9;
+    width: 250px;
+    margin: 5px;
+    border-radius: 5px;
+    padding: 0;
+    display: block;
+}
+
+.retro-header {
+    font-family: Poppins;
+    width: 250px;
+    height: 40px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin: auto;
+}
+
+.retro-header-text {
+    font-family: Poppins;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.likedLaneBase {
+    background-color: #DDF1F3;
+    color: #07938c;
+}
+
+.lackedLaneBase {
+    background-color: #F2E4EA;
+    color: #F64E60;
+}
+
+.learnedLaneBase {
+    background-color: #e5cffa;
+    color: #350860;
+}
+
+.longedforLaneBase {
+    background-color: #f5f1c3;
+    color: #FFA800;
+}
+
+.actionitemLaneBase {
+    background-color: #868686;
+    color: #ddd;
+}
+
+.retro-card {
+    background-color: #ffffff;
+    width: 220px;
+    padding-top: 2px;
+    padding-left: 5px;
+    border-radius: 8px;
+    border: solid 1px #e5e2e2;
+    box-shadow: 2px 2px #9c9797;
+}
+
+.retro-card-body p {
+    font-family: Poppins;
+    font-size: 0.85rem;
+}
+
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.05);
+}
+
+.retro-button {
+    display: block;
+    background-color: #8ae6ef;
+    color: #111;
+    border: none;
+    width: 230px;
+    height: 40px;
+    border-radius: 5px;
 }
