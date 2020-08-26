@@ -20,12 +20,12 @@ var TEMPLATE = `
             ondragover="allowDrop(event)" 
             ondragleave="clearDrop(event)"
         >
-            <div class="card-body p-1">
+            <div class="retro-card-body">
                 <p>
                     ${CARD_CONTENT_TEMPLATE}
                 </p>
-                <div class="row pl-3">
-                    <button class="btn btn-primary btn-sm col-10">View</button>
+                <div class="float-right">
+                    <button class="float-right" data-feather="eye">view</button>
                     <span class="col-2" data-feather="thumbs-up"></span>
                 </div>
             </div>

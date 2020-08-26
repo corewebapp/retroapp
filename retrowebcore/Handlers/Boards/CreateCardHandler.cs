@@ -42,7 +42,7 @@ namespace retrowebcore.Handlers.Boards
             if (!req.ValidateSlug())
                 return null;
 
-            var board = await _boardRepo.FirstOrDefault(x => x.Slug == req.Slug);
+            var board = await _boardRepo.FirstOrDefault(x => x.Slug == req.Slug, nameof(CreateNewCardHandler));
 
             if (board == null)
                 return null;

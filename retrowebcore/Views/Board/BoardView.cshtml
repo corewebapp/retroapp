@@ -26,29 +26,31 @@
             <div class="retro-header @idLaneBase">
                 <div class="retro-header-text">@BoardDetail.Label[each]</div>
             </div>
-            @for (int j = 0; j < Model.Cards[each].Count; j++)
-            {
-                var idCard = Model.Cards[each][j].Slug;
-                <div class="card retro-card draggable shadow-sm dropzone"
-                     id="@idCard" draggable="true"
-                     ondragstart="drag(event)"
-                     ondrop="merge(event)"
-                     ondragover="allowDrop(event)"
-                     ondragleave="clearDrop(event)">
-                    <div class="retro-card-body">
-                        <p>
-                            This is a description of a item on the board.
-                        </p>
-                        <div class="float-right">
-                            <button class="float-right" data-feather="eye">view</button>
-                            <span class="col-2" data-feather="thumbs-up"></span>
+            <div id="@idLane">
+                @for (int j = 0; j < Model.Cards[each].Count; j++)
+                {
+                    var idCard = Model.Cards[each][j].Slug;
+                    <div class="card retro-card draggable shadow-sm dropzone"
+                         id="@idCard" draggable="true"
+                         ondragstart="drag(event)"
+                         ondrop="merge(event)"
+                         ondragover="allowDrop(event)"
+                         ondragleave="clearDrop(event)">
+                        <div class="retro-card-body">
+                            <p>
+                                This is a description of a item on the board.
+                            </p>
+                            <div class="float-right">
+                                <button class="float-right" data-feather="eye">view</button>
+                                <span class="col-2" data-feather="thumbs-up"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                }
+                <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+            </div>
             <div>
-                <button class="retro-button grow" id="@idButtonAdd" data-type="@each">
+                <button class="retro-button grow lane-add-button" id="@idButtonAdd" data-type="@each">
                     New Item
                     <span class="spinner-border spinner-border-sm hidden" id="@idButtonAddSpinner" role="status" aria-hidden="true"></span>
                 </button>
